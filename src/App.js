@@ -67,8 +67,10 @@ const App = observer(() => {
                 //После прохождения всех страниц обнуляем счётчик страниц, устанавливаем, статус, 
                 // выводим новые новости объеденяем новые новости со старыми и отправляем на бэк
                 i = 0
-                let result = [...getData, ...data]
-                fetchToPOST(result)
+                let result = data
+                if (result !== []) {
+                    fetchToPOST(result)
+                }
                 setDataSource(data)
                 setStatus("READY!!!")
             }
@@ -82,7 +84,7 @@ const App = observer(() => {
         //Проверка уникальности новойстей (Если изменены поля меняется условие)
         const uniqNews = (news, index) => {
             for (let i = 0; i < dataLength; i++) {
-                if (news.title === getData[i].title) {
+                if (news.link === getData[i]) {
                     index = i;
                 }
             }
