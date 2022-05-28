@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9740ab11-93b9-4454-9820-19b422e37076" name="Changes" comment="" />
+    <list default="true" id="9740ab11-93b9-4454-9820-19b422e37076" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,7 +28,11 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/App.js" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectId" id="27YDgxMwuvI8g7qBGHKd3oMec24" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -56,7 +63,10 @@
       <workItem from="1651511361382" duration="83000" />
       <workItem from="1651749024865" duration="18347000" />
       <workItem from="1651782956099" duration="170000" />
-      <workItem from="1651813504431" duration="2313000" />
+      <workItem from="1651813504431" duration="3068000" />
+      <workItem from="1651880996530" duration="20000" />
+      <workItem from="1653685233742" duration="9603000" />
+      <workItem from="1653723721606" duration="1546000" />
     </task>
     <servers />
   </component>

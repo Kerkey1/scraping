@@ -4,20 +4,19 @@ import {useEffect, useState} from "react";
 
 const App = observer(() => {
 
-
         let xhr = new XMLHttpRequest();
         xhr.responseType = "document";
         const url = 'https://penzanews.ru/archive/?start='; //Ссылка на страницу новостей
         const cors = 'https://cors-anywere.herokuapp.com/'; //API для обхода CORS
 
 
-        let getData //Для загрузки файла с бэка
-        let dataLength = 0 //Длина файла с бэка
+        let getData = [] //Для загрузки файла с бэка
+        let dataLength = 100 //Длина файла с бэка
+        let newHeadings = [] //Новые новости
         let i = 0 //Итератор страниц
         let data = [] //Массив новых записей
         const time = 1.5 //Время через которое будет повторяться запрос в минутах
-        const requestToBack = (time * 60000) //Время запроса к бэку
-        const requestToNews = (time * 60000 + 8000) // Время запроса к ресурсу
+        const requestToNews = (time * 30000) // Время запроса к ресурсу
         const [dataSource, setDataSource] = useState() //Вывод новых записей в окно на странице
         const [status, setStatus] = useState("processing..") //Статус выполнения на странице
 
@@ -66,13 +65,32 @@ const App = observer(() => {
             } else {
                 //После прохождения всех страниц обнуляем счётчик страниц, устанавливаем, статус, 
                 // выводим новые новости объеденяем новые новости со старыми и отправляем на бэк
-                i = 0
                 let result = data
                 if (result !== []) {
                     fetchToPOST(result)
+                    let rev = newHeadings.reverse()
+                    getData = [...getData, ...rev]
+
+                    if (getData.length > 100) {
+                        let dif = getData.length - 100
+                        getData.slice(dif)
+                    }
                 }
+
                 setDataSource(data)
                 setStatus("READY!!!")
+
+                //Обработку следующего запроса к сайту
+                setTimeout(() => {
+                    console.log(getData)
+                    i = 0
+                    newHeadings = []
+                    data = []
+                    setDataSource([])
+                    setStatus("processing..")
+                    xhr.open("GET", cors + url + 0, true);
+                    xhr.send()
+                }, requestToNews);
             }
         }
 
@@ -89,8 +107,9 @@ const App = observer(() => {
                 }
             }
             if (index > -1) {
-                console.log("есть")
+
             } else {
+                newHeadings.push(news.link)
                 data.push(news);
             }
         }
@@ -111,19 +130,16 @@ const App = observer(() => {
         }
 
         useEffect(() => {
-            setInterval(function () {
-                data = []
-                setDataSource([])
-                setStatus("processing..")
-                fetchToGET().then(v => dataLength = v.length)
-                fetchToGET().then(v => getData = v)
-            }, requestToBack);
-
-            setInterval(function () {
-                xhr.open("GET", cors + url + 0, true);
-                xhr.send()
-            }, requestToNews)
-
+            fetchToGET().then(v => {
+                if (v !== false) {
+                    dataLength = v.length
+                    getData = v
+                }
+            }).then(() => {
+                    xhr.open("GET", cors + url + 0, true)
+                    xhr.send()
+                }
+            )
         }, [])
 
         return <div>
@@ -132,6 +148,5 @@ const App = observer(() => {
             <br/>
             <textarea cols="200" rows="50" value={JSON.stringify(dataSource, null, 3)}/>
         </div>
-    })
-;
+    });
 export default App
